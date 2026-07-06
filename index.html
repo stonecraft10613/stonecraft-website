@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stonecraft LLC — Natural Stone · Knoxville, Tennessee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --slate:  #2C3040;
+  --gold:   #C4955A;
+  --gold-lt:#D9AF7A;
+  --cream:  #F5F0E8;
+  --gray:   #8C8C85;
+  --dark:   #1A1E28;
+  --white:  #FFFFFF;
+  --lt:     #C8C8C2;
+  --border: rgba(44,48,64,0.1);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  background: var(--cream);
+  color: var(--slate);
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ── CURSOR FOLLOWER ──────────────────────────────── */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.3s;
+  opacity: 0;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.35s ease, opacity 0.3s, width 0.2s, height 0.2s;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+body:hover .cursor, body:hover .cursor-ring { opacity: 1; }
+
+/* ── NAV ──────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: transparent;
+  transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(26, 30, 40, 0.96);
+  backdrop-filter: blur(12px);
+  padding: 0.9rem 3rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-monogram {
+  position: relative; width: 36px; height: 36px;
+  flex-shrink: 0;
+}
+.nav-monogram svg { width: 36px; height: 36px; }
+.nav-wordmark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream);
+}
+.nav-links {
+  display: flex; align-items: center; gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(245,240,232,0.7);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-size: 10.5px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background: var(--dark);
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 0 3rem;
+}
+
+/* Background monogram watermark */
+.hero-watermark {
+  position: absolute;
+  right: -4vw; top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+}
+.hero-watermark svg {
+  width: 70vw; height: 70vw;
+  max-width: 800px; max-height: 800px;
+}
+
+/* Thin horizontal rule across hero */
+.hero-rule {
+  position: absolute; left: 3rem; right: 3rem; top: 50%;
+  height: 1px; background: rgba(196,149,90,0.15);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+.hero-eyebrow {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-eyebrow::before {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 300; line-height: 1.05;
+  color: var(--cream); letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+.hero h1 em {
+  font-style: italic; color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 15px; font-weight: 300; line-height: 1.8;
+  color: var(--gray); max-width: 460px;
+  margin-bottom: 3rem;
+}
+
+.hero-actions { display: flex; align-items: center; gap: 2rem; }
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+.btn-ghost {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(245,240,232,0.6);
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--cream); }
+.btn-ghost span { font-size: 16px; }
+
+.hero-stats {
+  position: absolute; bottom: 3rem; right: 3rem;
+  display: flex; gap: 3rem; z-index: 2;
+}
+.stat-item { text-align: right; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem; font-weight: 600;
+  color: var(--cream); line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-num sup { font-size: 1rem; color: var(--gold); }
+.stat-label {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 3rem; left: 3rem;
+  display: flex; align-items: center; gap: 0.75rem; z-index: 2;
+}
+.scroll-line {
+  width: 1px; height: 48px; background: var(--gold);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+}
+.scroll-text {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gray); writing-mode: vertical-rl;
+}
+
+/* ── INTRO BAND ───────────────────────────────────── */
+.intro-band {
+  background: var(--slate);
+  padding: 5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.intro-left .section-tag {
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+}
+.intro-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400; color: var(--cream); line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+.intro-right p {
+  font-size: 15px; line-height: 1.9; color: var(--lt);
+  margin-bottom: 1.25rem;
+}
+.intro-right p:last-child { margin-bottom: 0; }
+.gold-initial {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; font-weight: 600;
+  color: var(--gold); float: left;
+  line-height: 0.8; margin: 0.1em 0.1em 0 0;
+}
+
+/* ── SECTION LABELS ───────────────────────────────── */
+.section-tag {
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+}
+.section-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 400; color: var(--slate);
+  line-height: 1.2; margin-bottom: 1.5rem;
+}
+
+/* ── MONOGRAM DIVIDER ─────────────────────────────── */
+.mono-divider {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 0.5rem 0;
+  margin: 4rem auto;
+  max-width: 300px;
+}
+.mono-divider .line { flex: 1; height: 1px; background: var(--gold); opacity: 0.3; }
+.mono-divider svg { width: 40px; height: 40px; flex-shrink: 0; }
+
+/* ── MATERIALS ────────────────────────────────────── */
+.materials {
+  padding: 6rem 3rem;
+  background: var(--cream);
+}
+.materials-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 3.5rem; gap: 2rem;
+}
+.materials-header-left .section-heading { margin-bottom: 0; }
+.materials-header-right {
+  font-size: 13px; color: var(--gray); max-width: 300px; line-height: 1.7; text-align: right;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: rgba(44,48,64,0.08);
+}
+.material-card {
+  background: var(--cream);
+  padding: 2.5rem 2rem;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.material-card:hover { background: var(--slate); }
+.material-card:hover .mat-name,
+.material-card:hover .mat-desc { color: var(--cream); }
+.material-card:hover .mat-desc { color: var(--lt); }
+.material-card:hover .mat-num { color: rgba(196,149,90,0.2); }
+
+.mat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; font-weight: 600;
+  color: rgba(44,48,64,0.06);
+  position: absolute; top: 1rem; right: 1.25rem;
+  line-height: 1; transition: color 0.3s;
+  pointer-events: none; user-select: none;
+}
+.mat-icon {
+  width: 32px; height: 2px; background: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.mat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--slate); margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+.mat-desc {
+  font-size: 13px; line-height: 1.7; color: var(--gray);
+  transition: color 0.3s;
+}
+.mat-tag {
+  display: inline-block; margin-top: 1rem;
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 1px;
+}
+
+/* ── PROCESS ──────────────────────────────────────── */
+.process {
+  background: var(--dark);
+  padding: 6rem 3rem;
+}
+.process-header { text-align: center; margin-bottom: 4rem; }
+.process-header .section-tag { color: var(--gold); }
+.process-header .section-heading { color: var(--cream); margin-bottom: 0; }
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute; top: 2rem; left: 12.5%; right: 12.5%;
+  height: 1px; background: rgba(196,149,90,0.3);
+}
+.step {
+  padding: 0 1.5rem;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.step-dot {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--gold);
+  background: var(--dark);
+  border-radius: 50%;
+  margin-bottom: 1.5rem; flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.step-dot.active { background: var(--gold); }
+.step-label {
+  font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-weight: 600; color: var(--cream);
+  margin-bottom: 0.75rem; line-height: 1.2;
+}
+.step-desc {
+  font-size: 13px; line-height: 1.7; color: var(--gray);
+}
+
+/* ── APPLICATIONS ─────────────────────────────────── */
+.applications {
+  background: var(--cream);
+  padding: 6rem 3rem;
+}
+.applications-header { margin-bottom: 3.5rem; }
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5px;
+  background: rgba(44,48,64,0.08);
+}
+.app-item {
+  background: var(--cream);
+  padding: 2.5rem 2.5rem;
+  display: flex; gap: 2rem; align-items: flex-start;
+  transition: background 0.3s;
+}
+.app-item:hover { background: white; }
+.app-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 600; color: var(--gold);
+  line-height: 1; flex-shrink: 0; opacity: 0.35;
+  width: 2.5rem; text-align: right;
+}
+.app-content {}
+.app-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 600; color: var(--slate);
+  margin-bottom: 0.5rem;
+}
+.app-desc { font-size: 13px; line-height: 1.7; color: var(--gray); }
+
+/* ── TESTIMONIAL ──────────────────────────────────── */
+.testimonial {
+  background: var(--slate);
+  padding: 6rem 3rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.testimonial-watermark {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.04; pointer-events: none;
+}
+.testimonial-watermark svg { width: 400px; height: 400px; }
+.testimonial blockquote {
+  position: relative; z-index: 1;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 300; font-style: italic;
+  color: var(--cream); line-height: 1.6;
+  max-width: 760px; margin: 0 auto 1.5rem;
+}
+.testimonial blockquote::before {
+  content: '\201C';
+  font-size: 6rem; color: var(--gold); opacity: 0.3;
+  position: absolute; top: -2rem; left: -1rem;
+  font-style: normal; line-height: 1;
+}
+.testimonial cite {
+  display: block; font-style: normal;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── WHY STONECRAFT ───────────────────────────────── */
+.why {
+  padding: 6rem 3rem;
+  background: var(--cream);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+  align-items: start;
+}
+.why-left {}
+.why-right {
+  display: flex; flex-direction: column; gap: 2rem;
+}
+.why-item {
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--gold);
+}
+.why-item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 600; color: var(--slate);
+  margin-bottom: 0.4rem;
+}
+.why-item-desc { font-size: 13px; line-height: 1.7; color: var(--gray); }
+
+/* ── ANNIVERSARY BAND ─────────────────────────────── */
+.anniv-band {
+  background: var(--dark);
+  padding: 3rem;
+  display: flex; align-items: center; justify-content: center; gap: 3rem;
+  flex-wrap: wrap;
+}
+.anniv-mark { display: flex; align-items: center; gap: 1.25rem; }
+.anniv-text { text-align: center; }
+.anniv-years {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem; font-weight: 600; color: var(--gold);
+  line-height: 1;
+}
+.anniv-label {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--lt); margin-top: 0.25rem;
+}
+.anniv-divider {
+  width: 1px; height: 60px; background: rgba(196,149,90,0.3);
+}
+.anniv-copy {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-style: italic; color: var(--cream);
+  max-width: 400px; line-height: 1.6; text-align: center;
+}
+
+/* ── CONTACT / CTA ────────────────────────────────── */
+.contact {
+  background: var(--slate);
+  padding: 6rem 3rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  align-items: start;
+}
+.contact-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400; color: var(--cream); line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+.contact-left p {
+  font-size: 14px; line-height: 1.8; color: var(--lt); margin-bottom: 2rem;
+}
+.contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+.contact-row { display: flex; align-items: baseline; gap: 1rem; }
+.contact-label {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); width: 80px; flex-shrink: 0;
+}
+.contact-val { font-size: 14px; color: var(--cream); }
+.contact-val.phone {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem; font-weight: 600; color: var(--gold);
+}
+.contact-right {}
+.hours-grid { display: flex; flex-direction: column; gap: 1rem; }
+.hours-row {
+  display: flex; justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+}
+.hours-day { color: var(--lt); }
+.hours-time { color: var(--cream); }
+.map-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 2rem;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); border-bottom: 1px solid rgba(196,149,90,0.4);
+  padding-bottom: 2px; transition: border-color 0.2s;
+}
+.map-link:hover { border-color: var(--gold); }
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  background: var(--dark);
+  padding: 2.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo { display: flex; align-items: center; gap: 12px; }
+.footer-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--cream);
+}
+.footer-tagline {
+  font-size: 10px; color: var(--gray); letter-spacing: 0.12em;
+}
+.footer-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.footer-links a {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray); transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--cream); }
+.footer-copy {
+  font-size: 10px; color: rgba(140,140,133,0.5);
+  letter-spacing: 0.08em;
+}
+
+/* ── REVEAL ANIMATIONS ────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  nav.scrolled { padding: 0.75rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 0 1.5rem; padding-top: 6rem; }
+  .hero-stats { right: 1.5rem; bottom: 2rem; gap: 2rem; }
+  .scroll-hint { display: none; }
+  .intro-band { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+  .materials { padding: 4rem 1.5rem; }
+  .materials-header { flex-direction: column; align-items: flex-start; }
+  .materials-header-right { text-align: left; }
+  .materials-grid { grid-template-columns: 1fr; }
+  .process { padding: 4rem 1.5rem; }
+  .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .process-steps::before { display: none; }
+  .applications { padding: 4rem 1.5rem; }
+  .app-grid { grid-template-columns: 1fr; }
+  .testimonial { padding: 4rem 1.5rem; }
+  .why { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+  .anniv-band { padding: 2.5rem 1.5rem; gap: 2rem; }
+  .anniv-divider { display: none; }
+  .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .scroll-line { animation: none; opacity: 0.6; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ──────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-logo">
+    <div class="nav-monogram">
+      <svg viewBox="0 0 40 40" fill="none">
+        <text x="0" y="36" font-family="Georgia,serif" font-size="38" font-weight="700" fill="#F5F0E8" opacity="0.9">S</text>
+        <text x="14" y="36" font-family="Georgia,serif" font-size="38" font-weight="700" fill="none" stroke="#C4955A" stroke-width="1.2">C</text>
+      </svg>
+    </div>
+    <span class="nav-wordmark">Stonecraft</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#process">Our Process</a></li>
+    <li><a href="#applications">Applications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:8659663900" class="nav-cta">(865) 966-3900</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <!-- Watermark SC monogram -->
+  <div class="hero-watermark" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none">
+      <text x="0" y="360" font-family="Georgia,serif" font-size="380" font-weight="700" fill="#F5F0E8">S</text>
+      <text x="160" y="360" font-family="Georgia,serif" font-size="380" font-weight="700" fill="none" stroke="#C4955A" stroke-width="4">C</text>
+    </svg>
+  </div>
+
+  <div class="hero-rule" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Knoxville, Tennessee · Est. 1986</div>
+    <h1>
+      Nature's product.<br>
+      <em>Precision</em> crafted.
+    </h1>
+    <p class="hero-sub">
+      Stonecraft fabricates and installs natural granite, marble, quartzite, and quartz for residential and commercial projects across East Tennessee — templated, cut, and finished in our West Knoxville shop.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Consultation</a>
+      <a href="#materials" class="btn-ghost">Explore Materials <span>↓</span></a>
+    </div>
+  </div>
+
+  <div class="hero-stats" aria-label="Key statistics">
+    <div class="stat-item">
+      <div class="stat-num">40<sup>+</sup></div>
+      <div class="stat-label">Years in Knoxville</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">200<sup>+</sup></div>
+      <div class="stat-label">Combined Years Experience</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ── INTRO ─────────────────────────────────────────── -->
+<section class="intro-band">
+  <div class="intro-left reveal">
+    <div class="section-tag">Who We Are</div>
+    <h2>Knoxville's Natural Stone Fabricator</h2>
+  </div>
+  <div class="intro-right reveal reveal-delay-1">
+    <p>
+      <span class="gold-initial">Y</span>ears of expertise await you when you choose Stonecraft. Over 40 years of extensive knowledge working with natural stone is what sets us apart. The rainbow is your palette and the limits are boundless as our knowledgeable sales staff helps you create the exact look you want.
+    </p>
+    <p>
+      We run our own templating, fabrication, and installation under one roof — showroom, slab yard, and a full fabrication plant at our West Knoxville facility just off the Lovell Road exit of I-40.
+    </p>
+  </div>
+</section>
+
+<!-- ── MATERIALS ─────────────────────────────────────── -->
+<section class="materials" id="materials">
+  <div class="materials-header reveal">
+    <div class="materials-header-left">
+      <div class="section-tag">What We Work With</div>
+      <h2 class="section-heading">Materials</h2>
+    </div>
+    <div class="materials-header-right">
+      Every slab in our yard is handpicked. We carry the full spectrum of natural and engineered stone for any application.
+    </div>
+  </div>
+
+  <div class="materials-grid">
+    <div class="material-card reveal">
+      <div class="mat-num">01</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Granite</div>
+      <p class="mat-desc">The oldest building material on earth, quarried since 4,000 B.C. A unique grain flow, striking crystalline structure, and beautiful durability — ideal for kitchen countertops and high-traffic surfaces.</p>
+      <div class="mat-tag">Most Popular</div>
+    </div>
+    <div class="material-card reveal reveal-delay-1">
+      <div class="mat-num">02</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Marble</div>
+      <p class="mat-desc">Brilliantly reflects light with a natural warmth that no engineered surface can replicate. Timeless for bathroom vanities, fireplace surrounds, and furniture tops. Each piece entirely one-of-a-kind.</p>
+    </div>
+    <div class="material-card reveal reveal-delay-2">
+      <div class="mat-num">03</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Quartzite</div>
+      <p class="mat-desc">The appearance of marble with the durability of granite. Formed under intense heat and pressure, quartzite is one of the hardest natural stones — naturally resistant to etching and low porosity.</p>
+    </div>
+    <div class="material-card reveal">
+      <div class="mat-num">04</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Limestone</div>
+      <p class="mat-desc">Warm, muted tones with a naturally aged quality. Excellent for flooring, wall cladding, and outdoor applications where a softer, more organic aesthetic is desired.</p>
+    </div>
+    <div class="material-card reveal reveal-delay-1">
+      <div class="mat-num">05</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Soapstone</div>
+      <p class="mat-desc">Non-porous, heat-resistant, and stain-proof without sealing. Develops a rich natural patina over time. Never needs sealing — a surface that genuinely improves with age.</p>
+      <div class="mat-tag">Never Needs Sealing</div>
+    </div>
+    <div class="material-card reveal reveal-delay-2">
+      <div class="mat-num">06</div>
+      <div class="mat-icon"></div>
+      <div class="mat-name">Quartz</div>
+      <p class="mat-desc">Engineered for consistency and performance. The ideal solution where uniformity, color matching, and zero maintenance are priorities — particularly for large commercial installations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ────────────────────────────────────────── -->
+<section class="process" id="process">
+  <div class="process-header reveal">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-heading" style="color:var(--cream)">From Slab to Surface</h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-dot active"></div>
+      <div class="step-label">Step 01</div>
+      <div class="step-title">Slab Selection</div>
+      <p class="step-desc">Visit our slab yard and select your stone in person. Our team helps you understand grain, color, and veining so you choose with confidence.</p>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-dot"></div>
+      <div class="step-label">Step 02</div>
+      <div class="step-title">Laser Templating</div>
+      <p class="step-desc">We use Flexijet 3D laser templating on your actual jobsite — precision measurements that eliminate guesswork before a single cut is made.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-dot"></div>
+      <div class="step-label">Step 03</div>
+      <div class="step-title">In-House Fabrication</div>
+      <p class="step-desc">Every slab is cut, edged, and finished in our Knoxville fabrication plant using state-of-the-art equipment and experienced hands.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-dot"></div>
+      <div class="step-label">Step 04</div>
+      <div class="step-title">Professional Installation</div>
+      <p class="step-desc">Our installation team handles delivery and setting with guaranteed workmanship. We don't leave until it's right.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── APPLICATIONS ───────────────────────────────────── -->
+<section class="applications" id="applications">
+  <div class="applications-header reveal">
+    <div class="section-tag">Where We Work</div>
+    <h2 class="section-heading">Residential & Commercial</h2>
+  </div>
+
+  <div class="app-grid">
+    <div class="app-item reveal">
+      <div class="app-num">1</div>
+      <div class="app-content">
+        <div class="app-name">Kitchen Countertops</div>
+        <p class="app-desc">Our most requested application. Custom countertops, islands, and bar tops fabricated to exact dimension with your choice of edge profile.</p>
+      </div>
+    </div>
+    <div class="app-item reveal reveal-delay-1">
+      <div class="app-num">2</div>
+      <div class="app-content">
+        <div class="app-name">Bathroom Vanities</div>
+        <p class="app-desc">Vessel surrounds, tub decks, shower walls, and custom vanity tops — natural stone elevates every bath surface it touches.</p>
+      </div>
+    </div>
+    <div class="app-item reveal">
+      <div class="app-num">3</div>
+      <div class="app-content">
+        <div class="app-name">Fireplace Surrounds</div>
+        <p class="app-desc">The centerpiece of any room. We fabricate and install hearths, surrounds, and mantels in stone that handles heat and holds its finish for decades.</p>
+      </div>
+    </div>
+    <div class="app-item reveal reveal-delay-1">
+      <div class="app-num">4</div>
+      <div class="app-content">
+        <div class="app-name">Commercial Surfaces</div>
+        <p class="app-desc">Restaurant bar tops, hotel reception counters, elevator faces, restroom vanities, and wall cladding — high-volume fabrication for the Southeast.</p>
+      </div>
+    </div>
+    <div class="app-item reveal">
+      <div class="app-num">5</div>
+      <div class="app-content">
+        <div class="app-name">Outdoor Kitchens</div>
+        <p class="app-desc">Granite and quartzite perform exceptionally in outdoor environments. We fabricate weather-resistant surfaces for pools, patios, and outdoor living areas.</p>
+      </div>
+    </div>
+    <div class="app-item reveal reveal-delay-1">
+      <div class="app-num">6</div>
+      <div class="app-content">
+        <div class="app-name">Finishing Details</div>
+        <p class="app-desc">Window stools, door mouldings, corner pieces, custom furniture tops — the detail work that takes a space from finished to exceptional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ────────────────────────────────────── -->
+<section class="testimonial">
+  <div class="testimonial-watermark" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none">
+      <text x="0" y="360" font-family="Georgia,serif" font-size="380" font-weight="700" fill="#F5F0E8">S</text>
+      <text x="160" y="360" font-family="Georgia,serif" font-size="380" font-weight="700" fill="none" stroke="#C4955A" stroke-width="4">C</text>
+    </svg>
+  </div>
+  <blockquote class="reveal">
+    The knowledge, workmanship, and professionalism throughout the entire process was outstanding. If I ever need granite in the future, I will be back.
+  </blockquote>
+  <cite class="reveal reveal-delay-1">— Sharon G. Lee &nbsp;·&nbsp; Knoxville, Tennessee</cite>
+</section>
+
+<!-- ── WHY STONECRAFT ──────────────────────────────────── -->
+<section class="why">
+  <div class="why-left reveal">
+    <div class="section-tag">Why Stonecraft</div>
+    <h2 class="section-heading">Four decades.<br>One standard.</h2>
+    <p style="font-size:14px;line-height:1.8;color:var(--gray);margin-top:1rem;">
+      We've been fabricating and installing natural stone in Knoxville since 1986. Our entire team — sales, fabrication, and installation — works under one roof, which means tighter communication, faster turnaround, and no surprises at installation.
+    </p>
+    <div class="mono-divider">
+      <div class="line"></div>
+      <svg viewBox="0 0 60 60" fill="none">
+        <text x="2" y="54" font-family="Georgia,serif" font-size="52" font-weight="700" fill="#2C3040">S</text>
+        <text x="24" y="54" font-family="Georgia,serif" font-size="52" font-weight="700" fill="none" stroke="#C4955A" stroke-width="1.5">C</text>
+      </svg>
+      <div class="line"></div>
+    </div>
+  </div>
+  <div class="why-right">
+    <div class="why-item reveal">
+      <div class="why-item-title">We Take Our Own Measurements</div>
+      <p class="why-item-desc">No subcontractors, no handoffs. We template your jobsite ourselves using Flexijet 3D laser technology. Accurate dimensions before a single cut.</p>
+    </div>
+    <div class="why-item reveal reveal-delay-1">
+      <div class="why-item-title">Full-Service Facility</div>
+      <p class="why-item-desc">Showroom, slab yard, and fabrication plant all at 10613 Lexington Drive. Come see your material in person before you commit.</p>
+    </div>
+    <div class="why-item reveal reveal-delay-2">
+      <div class="why-item-title">Guaranteed Workmanship</div>
+      <p class="why-item-desc">We stand behind every installation. Our crew doesn't leave until the job meets our standard — which is higher than most.</p>
+    </div>
+    <div class="why-item reveal reveal-delay-3">
+      <div class="why-item-title">Trade Account Ready</div>
+      <p class="why-item-desc">Architects, GCs, interior designers, and kitchen &amp; bath dealers — we have dedicated account service for trade professionals across East Tennessee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 40TH ANNIVERSARY BAND ──────────────────────────── -->
+<div class="anniv-band reveal">
+  <div class="anniv-mark">
+    <svg width="48" height="48" viewBox="0 0 60 60" fill="none">
+      <text x="2" y="54" font-family="Georgia,serif" font-size="52" font-weight="700" fill="#F5F0E8" opacity="0.9">S</text>
+      <text x="24" y="54" font-family="Georgia,serif" font-size="52" font-weight="700" fill="none" stroke="#C4955A" stroke-width="1.5">C</text>
+    </svg>
+  </div>
+  <div class="anniv-text">
+    <div class="anniv-years">40</div>
+    <div class="anniv-label">Years of Craftsmanship · 1986–2026</div>
+  </div>
+  <div class="anniv-divider"></div>
+  <p class="anniv-copy">
+    "The elegance of natural stone — created by nature, perfected by Stonecraft."
+  </p>
+</div>
+
+<!-- ── CONTACT ────────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="contact-left reveal">
+    <div class="section-tag">Get in Touch</div>
+    <h2>Visit Our Showroom &amp; Slab Yard</h2>
+    <p>Walk through our showroom, pick your stone in the yard, and talk to someone who knows natural stone. No pressure — just expertise.</p>
+    <div class="contact-info">
+      <div class="contact-row">
+        <span class="contact-label">Phone</span>
+        <span class="contact-val phone">(865) 966-3900</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Address</span>
+        <span class="contact-val">10613 Lexington Drive<br>Knoxville, TN 37932</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Web</span>
+        <span class="contact-val">stonecraftusa.com</span>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?q=10613+Lexington+Drive+Knoxville+TN" class="map-link" target="_blank" rel="noopener">
+      Get Directions →
+    </a>
+  </div>
+
+  <div class="contact-right reveal reveal-delay-1">
+    <div class="section-tag">Hours</div>
+    <div class="hours-grid">
+      <div class="hours-row">
+        <span class="hours-day">Monday</span>
+        <span class="hours-time">8:00 AM – 5:00 PM</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Tuesday</span>
+        <span class="hours-time">8:00 AM – 5:00 PM</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Wednesday</span>
+        <span class="hours-time">8:00 AM – 5:00 PM</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Thursday</span>
+        <span class="hours-time">8:00 AM – 5:00 PM</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Friday</span>
+        <span class="hours-time">8:00 AM – 5:00 PM</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Saturday</span>
+        <span class="hours-time">By Appointment</span>
+      </div>
+      <div class="hours-row" style="border-bottom:none;">
+        <span class="hours-day">Sunday</span>
+        <span class="hours-time" style="color:var(--gray)">Closed</span>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;padding:1.5rem;background:rgba(255,255,255,0.04);border-left:2px solid var(--gold);">
+      <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Location</p>
+      <p style="font-size:13px;color:var(--lt);line-height:1.7;">Just off the Lovell Road exit of I-40 in West Knoxville. Look for us at 10613 Lexington Drive — showroom, slab yard, and fabrication plant all on site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">
+    <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+      <text x="0" y="36" font-family="Georgia,serif" font-size="36" font-weight="700" fill="#F5F0E8" opacity="0.85">S</text>
+      <text x="14" y="36" font-family="Georgia,serif" font-size="36" font-weight="700" fill="none" stroke="#C4955A" stroke-width="1.2">C</text>
+    </svg>
+    <div>
+      <div class="footer-logo-text">Stonecraft LLC</div>
+      <div class="footer-tagline">Natural Stone · Knoxville, TN</div>
+    </div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#applications">Applications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Stonecraft LLC · All Rights Reserved</div>
+</footer>
+
+<!-- ── SCRIPTS ────────────────────────────────────────── -->
+<script>
+/* Nav scroll state */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* Reveal on scroll */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+/* Custom cursor */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+/* Cursor grow on interactive elements */
+document.querySelectorAll('a, button, .material-card, .app-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width = '56px';
+    ring.style.height = '56px';
+    ring.style.transform = `translate(${rx - 28}px, ${ry - 28}px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+  });
+});
+</script>
+</body>
+</html>
